@@ -2,11 +2,6 @@ import api from './utils/api'
 import OrderStore from './OrderStore'
 import UIState from './UIState'
 
-api.config({
-  url: 'http://www.json-generator.com/api/json',
-  jsonId: 'bPeADmFUKq'
-})
-
 function shouldUpdateOrder(order) {
   if (!order) return true
 
