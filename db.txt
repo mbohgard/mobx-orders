@@ -1,0 +1,52 @@
+// JSON GENERATOR TEMPLATE
+
+[
+  '{{repeat(50, 100)}}',
+  {
+    id: '{{objectId()}}',
+    orderId: '{{index(1594)}}',
+    status: '{{random("active", "completed", "pending", "cancelled")}}',
+    departureTime: '{{date(new Date(), new Date(2016, 6, 1), "ISODateTime")}}',
+    from: {
+      streetName: '{{street()}}',
+      streetNumber: '{{integer(1, 200)}}',
+      city: '{{city()}}'
+    },
+    to: {
+      streetName: '{{street()}}',
+      streetNumber: '{{integer(1, 200)}}',
+      city: '{{city()}}'
+    },
+    name: '{{firstName()}} {{surname()}}',
+    phoneNumber: function(tags) {
+      return '+467' + tags.random("3", "7", "6") + '0' + tags.integer(111111,999999);
+    },
+
+    vehicle: '{{integer(1000, 5000)}}',
+    driver: {
+      name: '{{firstName()}} {{surname()}}',
+      id: '{{integer(1111, 99999)}}',
+      phoneNumber: function(tags) {
+        return '+467' + tags.random("3", "7", "6") + '0' + tags.integer(111111,999999);
+      }
+    },
+    vehicleAttributes: function(tags) {
+      var attributes = [
+        'Bilbarnstol', 'Combi', 'Miljöbil', 'Max-Storbil',
+        'Bud', 'Tjänstebiljett', 'Djur'
+      ];
+      var loops = tags.integer(0,3);
+      var arr = [];
+      var randInt;
+
+      for (var i = 0; i < loops; i++) {
+        randInt = tags.integer(0,attributes.length - 1);
+        if (arr.indexOf(attributes[randInt]) < 0) {
+          arr.push(attributes[randInt]);
+        }
+      }
+
+      return arr;
+    }
+  }
+]
