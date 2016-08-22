@@ -1,5 +1,8 @@
 @import 'reset.scss';
 
+$primary-color: #aaa;
+@import '~loaders.css/src/animations/ball-scale-multiple.scss';
+
 * {
   box-sizing: border-box;
 }
@@ -7,6 +10,52 @@
 body {
   padding: 20px;
   padding-top: 0;
+  font-family: 'Roboto Slab', serif;
+}
+
+strong {
+  font-weight: bold;
+}
+
+.loader {
+  position: relative;
+  left: -15px;
+  transition: all .25s;
+
+  &.loader-hidden {
+    visibility: hidden;
+    opacity: 0;
+  }
+  &.loader-active {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .loader-inner {
+    transform: translate(0,0);
+    top: 50%;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+
+    div {
+      width: 26px;
+      height: 26px;
+      top: -13px;
+      left: -13px;
+    }
+  }
+}
+
+.order-details .loader {
+  left: 0;
+  width: 25px;
+  display: inline-block;
+
+  .loader-inner div {
+    top: -17px;
+    left: 0;
+  }
 }
 
 .app-container {
@@ -40,17 +89,21 @@ body {
   font-weight: bold;
   color: #aaa;
   background: #eee;
+  cursor: pointer;
 
   &.active {
     color: #666;
     background: #ddd;
+  }
+
+  &:focus {
+    outline: none;
   }
 }
 
 .orders {
   font-size: 12px;
   line-height: 1.5;
-  font-family: 'Roboto Slab', serif;
   flex: 0 65%;
 }
 
@@ -71,22 +124,59 @@ body {
     background: #ddd;
   }
 
+  &:first-child {
+    background: #ccc;
+  }
+
   &.active {
     background: HotPink;
   }
 }
 
+.orders th {
+  padding: 10px;
+  font-weight: bold;
+}
+
 .orders td {
   padding: 5px;
+
+  &:nth-child(even) {
+    background: rgba(0,0,0,.05)
+  }
 }
 
 .order-details {
   padding: 30px;
   flex: 0 35%;
+  line-height: 1.4;
+  font-size: 12px;
+  position: relative;
 
   a {
     color: blue;
     text-decoration: underline;
     cursor: pointer;
+    position: absolute;
+    display: block;
+    top: 0;
+    right: 0;
   }
+}
+
+.separated {
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.separated-extra {
+  display: block;
+  margin-top: 20px;
+  padding-top: 4px;
+  border-top: solid 1px #ddd;
+  margin-bottom: 15px;
+}
+
+.order-event {
+  margin-top: 7px;
 }

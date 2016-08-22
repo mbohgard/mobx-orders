@@ -15,6 +15,10 @@ const OrderActions = {
   getOrders: () => {
     api.getOrders().then(orders => {
       OrderStore.addOrder(orders)
+
+      if (!OrderStore.initialized) OrderStore.init()
+
+      if (UIState.searchLoading) UIState.setLoader('search', false)
     })
   },
 
@@ -32,12 +36,6 @@ const OrderActions = {
     })
   },
 
-  removeOrder: id => {
-    // todo: request to delete order
-
-    OrderStore.removeOrder(id)
-  },
-
   selectOrder: orderId => {
     OrderStore.setActiveOrderId(orderId)
 
@@ -45,7 +43,27 @@ const OrderActions = {
   },
 
   searchOrder: value => {
-    OrderStore.searchOrder(value)
+    UIState.setSearchValue(value)
+
+    if (!value || value.length > 2) UIState.setLoader('search', true)
+
+    if (value && value.length > 2) {
+      api.getOrders(value).then(orders => {
+        let sortedOrders
+
+        OrderStore.addOrder(orders)
+
+        if (orders.length) {
+          sortedOrders = OrderStore.ordersByDepartureTime
+
+          if (sortedOrders) {
+            OrderActions.selectOrder(sortedOrders[0].orderId)
+          }
+        }
+
+        UIState.setLoader('search', false)
+      })
+    } else if (!value) OrderActions.getOrders()
   }
 }
 

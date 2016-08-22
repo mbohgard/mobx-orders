@@ -5,6 +5,7 @@ import sortBy from 'lodash/sortBy'
 import find from 'lodash/find'
 
 class OrderStore {
+  @observable initialized = false
   orders = observable(asFlat([]))
   @observable activeOrderId = null
   detailedOrders = observable(asFlat([]))
@@ -15,6 +16,10 @@ class OrderStore {
 
   getDetailedOrder(orderId) {
     return find(this.detailedOrders, order => order.orderId === orderId)
+  }
+
+  @action init() {
+    this.initialized = true
   }
 
   @action addOrder(payload) {
@@ -36,12 +41,6 @@ class OrderStore {
 
     if (index < 0) this.detailedOrders.push(newOrder)
     else this.detailedOrders[index] = newOrder
-  }
-
-  @action removeOrder(id) {
-    const index = findIndex(this.orders, ['id', id])
-
-    this.orders.splice(index, 1)
   }
 
   @action setActiveOrderId(id = null) {

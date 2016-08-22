@@ -5,8 +5,8 @@
   {
     id: '{{objectId()}}',
     orderId: '{{index(1594)}}',
-    status: '{{random("active", "completed", "pending", "cancelled")}}',
-    departureTime: '{{date(new Date(), new Date(2016, 6, 1), "ISODateTime")}}',
+    status: '{{random("started", "active", "completed", "pending", "cancelled")}}',
+    departureTime: '{{date(new Date(), new Date(2016, 10, 1), "ISODateTime")}}',
     from: {
       streetName: '{{street()}}',
       streetNumber: '{{integer(1, 200)}}',
@@ -47,6 +47,14 @@
       }
 
       return arr;
-    }
+    },
+    price: '{{random(null, integer(95, 800))}}',
+    orderEvents: [
+      '{{repeat(2,20)}}',
+      {
+        time: '{{date(new Date(2016,8,1), new Date(), "ISODateTime")}}',
+        description: '{{lorem(1)}}'
+      }
+    ]
   }
 ]

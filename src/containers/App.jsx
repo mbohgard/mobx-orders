@@ -4,6 +4,7 @@ import DevTools from 'mobx-react-devtools'
 import isPlainObject from 'lodash/isPlainObject'
 import find from 'lodash/find'
 
+import UIState from '../UIState'
 import OrderStore from '../OrderStore'
 import OrderActions from '../OrderActions'
 
@@ -31,15 +32,16 @@ export default class App extends Component {
       <div className="app-container">
         <Search
           search={ OrderActions.searchOrder }
+          loading={ UIState.searchLoading }
+          value={ UIState.searchValue }
         />
 
         { OrderStore.orders.length ?
           <Orders
             orders={ OrderStore.ordersByDepartureTime }
             activeOrderId={ OrderStore.activeOrderId }
-            removeOrder={ OrderActions.removeOrder }
             selectOrder={ OrderActions.selectOrder }
-          /> : 'Loading...'
+          /> : OrderStore.initialized ? 'No orders found' : 'Loading...'
         }
 
         <OrderDetails
